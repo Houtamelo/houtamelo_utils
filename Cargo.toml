@@ -1,0 +1,8 @@
+[package]
+name = "houtamelo_utils"
+version = "1.0.0"
+authors = ["Houtamelo"]
+edition = "2021"
+
+[lib]
+crate-type = ["lib"]
