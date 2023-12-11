@@ -1,25 +1,19 @@
-use super::CollectionByRef;
+use super::IterGenerator;
 
-impl<'a, TValue> CollectionByRef<'a, &'a TValue> for [TValue] {
-	type Return = core::slice::Iter<'a, TValue>;
-
-	fn iterate(&'a self) -> Self::Return {
+impl<'a, TValue> IterGenerator<'a, &'a TValue> for [TValue] {
+	fn iterate(&'a self) -> impl Iterator<Item = &'a TValue> {
 		return self.iter();
 	}
 }
 
-impl<'a, TValue> CollectionByRef<'a, &'a TValue> for &'a [TValue] {
-	type Return = core::slice::Iter<'a, TValue>;
-
-	fn iterate(&'a self) -> Self::Return {
+impl<'a, TValue> IterGenerator<'a, &'a TValue> for &'a [TValue] {
+	fn iterate(&'a self) -> impl Iterator<Item = &'a TValue> {
 		return self.iter();
 	}
 }
 
-impl<'a, TValue> CollectionByRef<'a, &'a TValue> for &'a mut [TValue] {
-	type Return = core::slice::Iter<'a, TValue>;
-
-	fn iterate(&'a self) -> Self::Return {
+impl<'a, TValue> IterGenerator<'a, &'a TValue> for &'a mut [TValue] {
+	fn iterate(&'a self) -> impl Iterator<Item = &'a TValue> {
 		return self.iter();
 	}
 }
@@ -38,7 +32,7 @@ mod tests {
 		input_ref_test(&slice);
 	}
 
-	fn input_ref_test<'a>(input: &'a impl CollectionByRef<'a, &'a usize>) {
+	fn input_ref_test<'a>(input: &'a impl IterGenerator<'a, &'a usize>) {
 		for value in input.iterate() {
 			println!("{value}");
 		}
