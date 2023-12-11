@@ -12,7 +12,7 @@
 macro_rules! any_matches {
     ($collection: ident, $pattern: pat) => {
 		{ 
-			use $crate::collection_trait::*;
+			use $crate::prelude::IterGenerator;
 			$collection.iterate().any(|d| matches!(d, $pattern))
 		}
 	}
