@@ -1,19 +1,19 @@
 use super::IterGenerator;
 
 impl<'a, TValue, const TCOUNT: usize> IterGenerator<'a, &'a TValue> for [TValue; TCOUNT] {
-	fn iterate(&'a self) -> impl Iterator<Item = &'a TValue> {
+	fn iterate(&'a self) -> impl ExactSizeIterator<Item = &'a TValue> {
 		return self.iter();
 	}
 }
 
 impl<'a, TValue, const TCOUNT: usize> IterGenerator<'a, &'a TValue> for &'a [TValue; TCOUNT] {
-	fn iterate(&'a self) -> impl Iterator<Item = &'a TValue> {
+	fn iterate(&'a self) -> impl ExactSizeIterator<Item = &'a TValue> {
 		return self.iter();
 	}
 }
 
 impl<'a, TValue, const COUNT: usize> IterGenerator<'a, &'a TValue> for &'a mut [TValue; COUNT] {
-	fn iterate(&'a self) -> impl Iterator<Item = &'a TValue> {
+	fn iterate(&'a self) -> impl ExactSizeIterator<Item = &'a TValue> {
 		return self.iter();
 	}
 }

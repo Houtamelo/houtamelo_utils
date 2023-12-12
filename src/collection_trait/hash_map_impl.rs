@@ -2,19 +2,19 @@ use std::collections::HashMap;
 use super::IterGenerator;
 
 impl<'a, TKey, TValue> IterGenerator<'a, (&'a TKey, &'a TValue)> for HashMap<TKey, TValue> {
-	fn iterate(&'a self) -> impl Iterator<Item = (&'a TKey, &'a TValue)> {
+	fn iterate(&'a self) -> impl ExactSizeIterator<Item = (&'a TKey, &'a TValue)> {
 		return self.iter();
 	}
 }
 
 impl<'a, TKey, TValue> IterGenerator<'a, (&'a TKey, &'a TValue)> for &'a HashMap<TKey, TValue> {
-	fn iterate(&'a self) -> impl Iterator<Item = (&'a TKey, &'a TValue)> {
+	fn iterate(&'a self) -> impl ExactSizeIterator<Item = (&'a TKey, &'a TValue)> {
 		return self.iter();
 	}
 }
 
 impl<'a, TKey, TValue> IterGenerator<'a, (&'a TKey, &'a TValue)> for &'a mut HashMap<TKey, TValue> {
-	fn iterate(&'a self) -> impl Iterator<Item = (&'a TKey, &'a TValue)> {
+	fn iterate(&'a self) -> impl ExactSizeIterator<Item = (&'a TKey, &'a TValue)> {
 		return self.iter();
 	}
 }
