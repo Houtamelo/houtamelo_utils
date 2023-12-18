@@ -13,6 +13,10 @@ pub mod prelude {
 	pub use super::any_matches;
 	pub use super::clamp01::*;
 	pub use super::bounded_ints::*;
+	pub use super::bounded_ints::bound_i8::*;
+	pub use super::bounded_ints::bound_i16::*;
+	pub use super::bounded_ints::bound_u8::*;
+	pub use super::bounded_ints::bound_u16::*;
 	pub use super::bound_f32_impl;
 	pub use super::bound_f64_impl;
 	pub use super::indexed_set::*;

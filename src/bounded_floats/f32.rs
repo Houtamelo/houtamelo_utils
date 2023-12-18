@@ -222,50 +222,53 @@ macro_rules! bound_f32_impl {
 
 #[cfg(test)]
 mod tests {
-	#[derive(Debug, Copy, Clone)]
-	pub struct BoundF32 {
+	use serde::{Deserialize, Serialize};
+
+	#[allow(non_camel_case_types)]
+	#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
+	pub struct B_f32 {
 		inner_value: f32
 	}
 
-	bound_f32_impl!(BoundF32, -5.0, 5.0);
+	bound_f32_impl!(B_f32, -5.0, 5.0);
 
 	#[test]
 	fn test_new_bound_f32_within_range() {
 		let value = 3.0;
-		let bound_f32 = BoundF32::new(value);
+		let bound_f32 = B_f32::new(value);
 		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, value));
 	}
 
 	#[test]
 	fn test_new_bound_f32_outside_range() {
 		let value = 10.0;
-		let bound_f32 = BoundF32::new(value);
-		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, BoundF32::MAX));
+		let bound_f32 = B_f32::new(value);
+		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, B_f32::MAX));
 	}
 
 	#[test]
 	fn test_new_bound_f32_less_than_min() {
 		let value = -10.0;
-		let bound_f32 = BoundF32::new(value);
-		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, BoundF32::MIN));
+		let bound_f32 = B_f32::new(value);
+		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, B_f32::MIN));
 	}
 
 	#[test]
 	fn test_new_bound_f32_greater_than_max() {
 		let value = 10.0;
-		let bound_f32 = BoundF32::new(value);
-		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, BoundF32::MAX));
+		let bound_f32 = B_f32::new(value);
+		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, B_f32::MAX));
 	}
 
 	#[test]
 	fn test_new_bound_f32_with_min_value() {
-		let bound_f32 = BoundF32::new(BoundF32::MIN);
-		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, BoundF32::MIN));
+		let bound_f32 = B_f32::new(B_f32::MIN);
+		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, B_f32::MIN));
 	}
 
 	#[test]
 	fn test_set_bound_f32_within_range() {
-		let mut bound_f32 = BoundF32::default();
+		let mut bound_f32 = B_f32::default();
 		let new_value = 2.0;
 		bound_f32.set(new_value);
 		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, new_value));
@@ -273,18 +276,18 @@ mod tests {
 
 	#[test]
 	fn test_set_bound_f32_outside_range() {
-		let mut bound_f32 = BoundF32::default();
+		let mut bound_f32 = B_f32::default();
 		let new_value = 10.0;
 		bound_f32.set(new_value);
-		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, BoundF32::MAX));
+		assert!(float_cmp::approx_eq!(f32, bound_f32.inner_value, B_f32::MAX));
 	}
 
 	#[test]
 	fn test_add_bound_f32_within_range() {
 		let value1 = 2.0;
 		let value2 = 3.0;
-		let bound_f32_1 = BoundF32::new(value1);
-		let bound_f32_2 = BoundF32::new(value2);
+		let bound_f32_1 = B_f32::new(value1);
+		let bound_f32_2 = B_f32::new(value2);
 		let result = bound_f32_1 + bound_f32_2;
 		assert!(float_cmp::approx_eq!(f32, result.inner_value, 5.0));
 	}
@@ -293,15 +296,15 @@ mod tests {
 	fn test_add_bound_f32_greater_than_max() {
 		let value1 = 4.0;
 		let value2 = 3.0;
-		let bound_f32_1 = BoundF32::new(value1);
-		let bound_f32_2 = BoundF32::new(value2);
+		let bound_f32_1 = B_f32::new(value1);
+		let bound_f32_2 = B_f32::new(value2);
 		let result = bound_f32_1 + bound_f32_2;
-		assert!(float_cmp::approx_eq!(f32, result.inner_value, BoundF32::MAX));
+		assert!(float_cmp::approx_eq!(f32, result.inner_value, B_f32::MAX));
 	}
 
 	#[test]
 	fn test_addition_bound_f32_f32() {
-		let bound = BoundF32::new(2.0);
+		let bound = B_f32::new(2.0);
 		let value = 3.0;
 		let result = bound + value;
 		assert!(float_cmp::approx_eq!(f32, result, 5.0));
@@ -310,78 +313,78 @@ mod tests {
 	#[test]
 	fn test_addition_f32_bound_f32() {
 		let value = 2.0;
-		let bound = BoundF32::new(3.0);
+		let bound = B_f32::new(3.0);
 		let result = value + bound;
 		assert!(float_cmp::approx_eq!(f32, result, 5.0));
 	}
 
 	#[test]
 	fn subtract_bound_f32_objects_within_range() {
-		let bound1 = BoundF32::new(3.0);
-		let bound2 = BoundF32::new(2.0);
+		let bound1 = B_f32::new(3.0);
+		let bound2 = B_f32::new(2.0);
 		let result = bound1 - bound2;
 		assert!(float_cmp::approx_eq!(f32, result.inner_value, 1.0));
 	}
 
 	#[test]
 	fn subtract_bound_f32_objects_outside_range() {
-		let bound1 = BoundF32::new(-6.0);
-		let bound2 = BoundF32::new(4.0);
+		let bound1 = B_f32::new(-6.0);
+		let bound2 = B_f32::new(4.0);
 		let result = bound1 - bound2;
-		assert!(float_cmp::approx_eq!(f32, result.inner_value, BoundF32::MIN));
+		assert!(float_cmp::approx_eq!(f32, result.inner_value, B_f32::MIN));
 	}
 
 	#[test]
 	fn multiply_bound_f32_objects_within_range() {
-		let bound1 = BoundF32::new(2.0);
-		let bound2 = BoundF32::new(3.0);
+		let bound1 = B_f32::new(2.0);
+		let bound2 = B_f32::new(3.0);
 		let result = bound1 * bound2;
-		assert!(float_cmp::approx_eq!(f32, result.inner_value, BoundF32::MAX));
+		assert!(float_cmp::approx_eq!(f32, result.inner_value, B_f32::MAX));
 	}
 
 	#[test]
 	fn multiply_with_product_less_than_min_should_return_min() {
-		let a = BoundF32::new(-4.0);
-		let b = BoundF32::new(2.0);
+		let a = B_f32::new(-4.0);
+		let b = B_f32::new(2.0);
 		let result = a * b;
-		assert!(float_cmp::approx_eq!(f32, result.inner_value, BoundF32::MIN));
+		assert!(float_cmp::approx_eq!(f32, result.inner_value, B_f32::MIN));
 	}
 
 	#[test]
 	fn multiply_with_product_greater_than_min_should_return_correct_value() {
-		let a = BoundF32::new(-4.0);
-		let b = BoundF32::new(0.5);
+		let a = B_f32::new(-4.0);
+		let b = B_f32::new(0.5);
 		let result = a * b;
 		assert!(float_cmp::approx_eq!(f32, result.inner_value, -2.0));
 	}
 
 	#[test]
 	fn multiply_with_product_greater_than_max_should_return_max() {
-		let a = BoundF32::new(4.0);
-		let b = BoundF32::new(2.0);
+		let a = B_f32::new(4.0);
+		let b = B_f32::new(2.0);
 		let result = a * b;
-		assert!(float_cmp::approx_eq!(f32, result.inner_value, BoundF32::MAX));
+		assert!(float_cmp::approx_eq!(f32, result.inner_value, B_f32::MAX));
 	}
 
 	#[test]
 	fn test_divide_bound_f32_objects_within_range() {
-		let bound1 = BoundF32::new(2.0);
-		let bound2 = BoundF32::new(0.5);
+		let bound1 = B_f32::new(2.0);
+		let bound2 = B_f32::new(0.5);
 		let result = bound1 / bound2;
 		assert!(float_cmp::approx_eq!(f32, result.inner_value, 4.0));
 	}
 
 	#[test]
 	fn test_divide_by_non_zero_returns_correct_result() {
-		let bound_f32 = BoundF32::new(10.0);
+		let bound_f32 = B_f32::new(10.0);
 		let result = bound_f32 / 2.0;
 		assert!(float_cmp::approx_eq!(f32, result, 2.5));
 	}
 
 	#[test]
 	fn test_bound_f32_comparison() {
-		let value1 = BoundF32::new(2.0);
-		let value2 = BoundF32::new(2.0);
+		let value1 = B_f32::new(2.0);
+		let value2 = B_f32::new(2.0);
 		assert!(float_cmp::approx_eq!(f32, value1.inner_value, value2.inner_value));
 	}
 }

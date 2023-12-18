@@ -342,50 +342,51 @@ macro_rules! bound_f64_impl {
 mod tests {
 	use crate::bound_f64_impl;
 
+	#[allow(non_camel_case_types)]
 	#[derive(Debug, Copy, Clone)]
-	pub struct BoundF64 {
+	pub struct B_f64 {
 		inner_value: f64
 	}
 
-	bound_f64_impl!(BoundF64, -5.0, 5.0);
+	bound_f64_impl!(B_f64, -5.0, 5.0);
 
 	#[test]
 	fn test_new_bound_f64_within_range() {
 		let value = 3.0;
-		let bound_f64 = BoundF64::new(value);
+		let bound_f64 = B_f64::new(value);
 		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, value));
 	}
 
 	#[test]
 	fn test_new_bound_f64_outside_range() {
 		let value = 10.0;
-		let bound_f64 = BoundF64::new(value);
-		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, BoundF64::MAX));
+		let bound_f64 = B_f64::new(value);
+		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, B_f64::MAX));
 	}
 
 	#[test]
 	fn test_new_bound_f64_less_than_min() {
 		let value = -10.0;
-		let bound_f64 = BoundF64::new(value);
-		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, BoundF64::MIN));
+		let bound_f64 = B_f64::new(value);
+		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, B_f64::MIN));
 	}
 
 	#[test]
 	fn test_new_bound_f64_greater_than_max() {
 		let value = 10.0;
-		let bound_f64 = BoundF64::new(value);
-		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, BoundF64::MAX));
+		let bound_f64 = B_f64::new(value);
+		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, B_f64::MAX));
 	}
 
 	#[test]
 	fn test_new_bound_f64_with_min_value() {
-		let bound_f64 = BoundF64::new(BoundF64::MIN);
-		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, BoundF64::MIN));
+		let bound_f64 = B_f64::new(B_f64::MIN);
+		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, B_f64::MIN));
 	}
 
 	#[test]
 	fn test_set_bound_f64_within_range() {
-		let mut bound_f64 = BoundF64::default();
+		let mut bound_f64 = B_f64::default();
 		let new_value = 2.0;
 		bound_f64.set(new_value);
 		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, new_value));
@@ -393,18 +394,18 @@ mod tests {
 
 	#[test]
 	fn test_set_bound_f64_outside_range() {
-		let mut bound_f64 = BoundF64::default();
+		let mut bound_f64 = B_f64::default();
 		let new_value = 10.0;
 		bound_f64.set(new_value);
-		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, BoundF64::MAX));
+		assert!(float_cmp::approx_eq!(f64, bound_f64.inner_value, B_f64::MAX));
 	}
 
 	#[test]
 	fn test_add_bound_f64_within_range() {
 		let value1 = 2.0;
 		let value2 = 3.0;
-		let bound_f64_1 = BoundF64::new(value1);
-		let bound_f64_2 = BoundF64::new(value2);
+		let bound_f64_1 = B_f64::new(value1);
+		let bound_f64_2 = B_f64::new(value2);
 		let result = bound_f64_1 + bound_f64_2;
 		assert!(float_cmp::approx_eq!(f64, result.inner_value, 5.0));
 	}
@@ -413,15 +414,15 @@ mod tests {
 	fn test_add_bound_f64_greater_than_max() {
 		let value1 = 4.0;
 		let value2 = 3.0;
-		let bound_f64_1 = BoundF64::new(value1);
-		let bound_f64_2 = BoundF64::new(value2);
+		let bound_f64_1 = B_f64::new(value1);
+		let bound_f64_2 = B_f64::new(value2);
 		let result = bound_f64_1 + bound_f64_2;
-		assert!(float_cmp::approx_eq!(f64, result.inner_value, BoundF64::MAX));
+		assert!(float_cmp::approx_eq!(f64, result.inner_value, B_f64::MAX));
 	}
 
 	#[test]
 	fn test_addition_bound_f64_f64() {
-		let bound = BoundF64::new(2.0);
+		let bound = B_f64::new(2.0);
 		let value = 3.0;
 		let result = bound + value;
 		assert!(float_cmp::approx_eq!(f64, result, 5.0));
@@ -430,78 +431,78 @@ mod tests {
 	#[test]
 	fn test_addition_f64_bound_f64() {
 		let value = 2.0;
-		let bound = BoundF64::new(3.0);
+		let bound = B_f64::new(3.0);
 		let result = value + bound;
 		assert!(float_cmp::approx_eq!(f64, result, 5.0));
 	}
 
 	#[test]
 	fn subtract_bound_f64_objects_within_range() {
-		let bound1 = BoundF64::new(3.0);
-		let bound2 = BoundF64::new(2.0);
+		let bound1 = B_f64::new(3.0);
+		let bound2 = B_f64::new(2.0);
 		let result = bound1 - bound2;
 		assert!(float_cmp::approx_eq!(f64, result.inner_value, 1.0));
 	}
 
 	#[test]
 	fn subtract_bound_f64_objects_outside_range() {
-		let bound1 = BoundF64::new(-6.0);
-		let bound2 = BoundF64::new(4.0);
+		let bound1 = B_f64::new(-6.0);
+		let bound2 = B_f64::new(4.0);
 		let result = bound1 - bound2;
-		assert!(float_cmp::approx_eq!(f64, result.inner_value, BoundF64::MIN));
+		assert!(float_cmp::approx_eq!(f64, result.inner_value, B_f64::MIN));
 	}
 
 	#[test]
 	fn multiply_bound_f64_objects_within_range() {
-		let bound1 = BoundF64::new(2.0);
-		let bound2 = BoundF64::new(3.0);
+		let bound1 = B_f64::new(2.0);
+		let bound2 = B_f64::new(3.0);
 		let result = bound1 * bound2;
-		assert!(float_cmp::approx_eq!(f64, result.inner_value, BoundF64::MAX));
+		assert!(float_cmp::approx_eq!(f64, result.inner_value, B_f64::MAX));
 	}
 
 	#[test]
 	fn multiply_with_product_less_than_min_should_return_min() {
-		let a = BoundF64::new(-4.0);
-		let b = BoundF64::new(2.0);
+		let a = B_f64::new(-4.0);
+		let b = B_f64::new(2.0);
 		let result = a * b;
-		assert!(float_cmp::approx_eq!(f64, result.inner_value, BoundF64::MIN));
+		assert!(float_cmp::approx_eq!(f64, result.inner_value, B_f64::MIN));
 	}
 
 	#[test]
 	fn multiply_with_product_greater_than_min_should_return_correct_value() {
-		let a = BoundF64::new(-4.0);
-		let b = BoundF64::new(0.5);
+		let a = B_f64::new(-4.0);
+		let b = B_f64::new(0.5);
 		let result = a * b;
 		assert!(float_cmp::approx_eq!(f64, result.inner_value, -2.0));
 	}
 
 	#[test]
 	fn multiply_with_product_greater_than_max_should_return_max() {
-		let a = BoundF64::new(4.0);
-		let b = BoundF64::new(2.0);
+		let a = B_f64::new(4.0);
+		let b = B_f64::new(2.0);
 		let result = a * b;
-		assert!(float_cmp::approx_eq!(f64, result.inner_value, BoundF64::MAX));
+		assert!(float_cmp::approx_eq!(f64, result.inner_value, B_f64::MAX));
 	}
 
 	#[test]
 	fn test_divide_bound_f64_objects_within_range() {
-		let bound1 = BoundF64::new(2.0);
-		let bound2 = BoundF64::new(0.5);
+		let bound1 = B_f64::new(2.0);
+		let bound2 = B_f64::new(0.5);
 		let result = bound1 / bound2;
 		assert!(float_cmp::approx_eq!(f64, result.inner_value, 4.0));
 	}
 
 	#[test]
 	fn test_divide_by_non_zero_returns_correct_result() {
-		let bound_f64 = BoundF64::new(10.0);
+		let bound_f64 = B_f64::new(10.0);
 		let result = bound_f64 / 2.0;
 		assert!(float_cmp::approx_eq!(f64, result, 2.5));
 	}
 
 	#[test]
 	fn test_bound_f64_comparison() {
-		let value1 = BoundF64::new(2.0);
-		let value2 = BoundF64::new(2.0);
+		let value1 = B_f64::new(2.0);
+		let value2 = B_f64::new(2.0);
 		assert!(float_cmp::approx_eq!(f64, value1.inner_value, value2.inner_value));
 	}
 }

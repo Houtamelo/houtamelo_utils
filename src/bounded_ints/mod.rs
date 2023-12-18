@@ -1,35 +1,40 @@
-#[macro_use] mod macros;
+#[macro_use] pub mod macros;
+pub mod bound_u8;
+pub mod bound_u16;
+pub mod bound_i8;
+pub mod bound_i16;
 
 use macros::saturate_into::*;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Rem, RemAssign, Sub, SubAssign};
 use core::cmp::{Ord, Ordering, PartialOrd};
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct BoundUSize<const MIN: usize, const MAX: usize> {
 	inner_value: usize
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct BoundU32<const MIN: u32, const MAX: u32> {
 	inner_value: u32
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct BoundU64<const MIN: u64, const MAX: u64> {
 	inner_value: u64
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct BoundISize<const MIN: isize, const MAX: isize> {
 	inner_value: isize
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct BoundI32<const MIN: i32, const MAX: i32> {
 	inner_value: i32
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct BoundI64<const MIN: i64, const MAX: i64> {
 	inner_value: i64
 }

@@ -6,28 +6,10 @@ macro_rules! bound_eq {
             fn eq(&self, other: &Self) -> bool { return self.inner_value == other.inner_value; }
         }
 
-        impl<const MIN: $inner, const MAX: $inner> PartialEq<usize> for $type_name {
-            fn eq(&self, other: &usize) -> bool { return self.inner_value == *other as $inner; }
-        }
-
-        impl<const MIN: $inner, const MAX: $inner> PartialEq<u32> for $type_name {
-            fn eq(&self, other: &u32) -> bool { return self.inner_value == *other as $inner; }
-        }
-
-        impl<const MIN: $inner, const MAX: $inner> PartialEq<u64> for $type_name {
-            fn eq(&self, other: &u64) -> bool { return self.inner_value == *other as $inner; }
-        }
-
-        impl<const MIN: $inner, const MAX: $inner> PartialEq<isize> for $type_name {
-            fn eq(&self, other: &isize) -> bool { return self.inner_value as isize == *other; }
-        }
-
-        impl<const MIN: $inner, const MAX: $inner> PartialEq<i32> for $type_name {
-            fn eq(&self, other: &i32) -> bool { return self.inner_value as i32 == *other; }
-        }
-
-        impl<const MIN: $inner, const MAX: $inner> PartialEq<i64> for $type_name {
-            fn eq(&self, other: &i64) -> bool { return self.inner_value as i64 == *other; }
+        impl<const MIN: $inner, const MAX: $inner, T> PartialEq<T> for $type_name where T: SaturateInto<$inner> + Copy {
+        	fn eq(&self, other: &T) -> bool {
+		        return self.inner_value == <T as SaturateInto<$inner>>::saturate_into(*other);
+	        }
         }
 
         impl<const MIN: $inner, const MAX: $inner> PartialEq<$type_name> for usize {
