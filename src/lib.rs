@@ -7,6 +7,7 @@ mod clamp01;
 mod bounded_floats;
 mod indexed_set;
 mod indexed_hash_map;
+mod dynamic_array;
 
 pub mod prelude {
 	pub use super::iter_generator::*;
@@ -21,6 +22,7 @@ pub mod prelude {
 	pub use super::bound_f64_impl;
 	pub use super::indexed_set::*;
 	pub use super::indexed_hash_map::*;
+	pub use super::dynamic_array::*;
 }
 
 #[cfg(test)]
