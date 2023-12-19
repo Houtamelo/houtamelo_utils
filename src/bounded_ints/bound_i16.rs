@@ -3,6 +3,7 @@
 use std::cmp::Ordering;
 use serde::{Deserialize, Serialize};
 use std::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign};
+use num_traits::FromPrimitive;
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct B_i16<const MIN: i16, const MAX: i16> {
@@ -71,22 +72,6 @@ impl<const MIN: i16, const MAX: i16> PartialOrd<B_i16<MIN, MAX>> for i16 {
 
 impl<const MIN: i16, const MAX: i16> Default for B_i16<MIN, MAX> {
 	fn default() -> Self { return Self::new(MIN); }
-}
-
-impl<const MIN: i16, const MAX: i16> From<i16> for B_i16<MIN, MAX> {
-	fn from(value: i16) -> Self {
-		if value < MIN {
-			return Self { inner_value: MIN };
-		} else if value > MAX {
-			return Self { inner_value: MAX };
-		} else {
-			return Self { inner_value: value };
-		}
-	}
-}
-
-impl<const MIN: i16, const MAX: i16> From<B_i16<MIN, MAX>> for i16 {
-	fn from(value: B_i16<MIN, MAX>) -> Self { return value.inner_value; }
 }
 
 impl<const MIN: i16, const MAX: i16> std::hash::Hash for B_i16<MIN, MAX> {
@@ -308,6 +293,100 @@ impl<const MIN: i16, const MAX: i16> RemAssign<i16> for B_i16<MIN, MAX> {
 impl<const MIN: i16, const MAX: i16> RemAssign<B_i16<MIN, MAX>> for i16 {
 	fn rem_assign(&mut self, other: B_i16<MIN, MAX>) {
 		*self = i16::checked_rem(*self, other.inner_value).unwrap_or(0);
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<u8> for B_i16<MIN, MAX> {
+	fn from(value: u8) -> Self {
+		return Self::new(value as i16);
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<u16> for B_i16<MIN, MAX> {
+	fn from(value: u16) -> Self {
+		if let Some(value) = i16::from_u16(value) {
+			return Self::new(value);
+		} else {
+			return Self::new(MAX);
+		}
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<u32> for B_i16<MIN, MAX> {
+	fn from(value: u32) -> Self {
+		if let Some(value) = i16::from_u32(value) {
+			return Self::new(value);
+		} else {
+			return Self::new(MAX);
+		}
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<u64> for B_i16<MIN, MAX> {
+	fn from(value: u64) -> Self {
+		if let Some(value) = i16::from_u64(value) {
+			return Self::new(value);
+		} else {
+			return Self::new(MAX);
+		}
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<u128> for B_i16<MIN, MAX> {
+	fn from(value: u128) -> Self {
+		if let Some(value) = i16::from_u128(value) {
+			return Self::new(value);
+		} else {
+			return Self::new(MAX);
+		}
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<i8> for B_i16<MIN, MAX> {
+	fn from(value: i8) -> Self {
+		return Self::new(value as i16)
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<i16> for B_i16<MIN, MAX> {
+	fn from(value: i16) -> Self {
+		return Self::new(value);
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<i32> for B_i16<MIN, MAX> {
+	fn from(value: i32) -> Self {
+		if value < MIN as i32 {
+			return B_i16::<MIN, MAX>::new(MIN);
+		} else if value > MAX as i32 {
+			return B_i16::<MIN, MAX>::new(MAX);
+		} else {
+			return B_i16::<MIN, MAX>::new(value as i16);
+		}
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<i64> for B_i16<MIN, MAX> {
+	fn from(value: i64) -> Self {
+		if value < MIN as i64 {
+			return B_i16::<MIN, MAX>::new(MIN);
+		} else if value > MAX as i64 {
+			return B_i16::<MIN, MAX>::new(MAX);
+		} else {
+			return B_i16::<MIN, MAX>::new(value as i16);
+		}
+	}
+}
+
+impl<const MIN: i16, const MAX: i16> From<i128> for B_i16<MIN, MAX> {
+	fn from(value: i128) -> Self {
+		if value < MIN as i128 {
+			return B_i16::<MIN, MAX>::new(MIN);
+		} else if value > MAX as i128 {
+			return B_i16::<MIN, MAX>::new(MAX);
+		} else {
+			return B_i16::<MIN, MAX>::new(value as i16);
+		}
 	}
 }
 

@@ -1,8 +1,8 @@
-pub(crate) trait SaturateInto<T> {
+pub trait SaturateInto<T> {
 	fn saturate_into(self) -> T;
 }
 
-pub(crate) trait SaturateEq<T> where Self: SaturateInto<T> + Sized, T: PartialEq {
+pub trait SaturateEq<T> where Self: SaturateInto<T> + Sized, T: PartialEq {
 	fn saturate_eq(self, other: T) -> bool {
 		return SaturateInto::saturate_into(self) == other;
 	}

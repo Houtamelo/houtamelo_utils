@@ -1,6 +1,6 @@
 [package]
 name = "houtamelo_utils"
-version = "1.0.0"
+version = "2.0.0"
 authors = ["Houtamelo"]
 edition = "2021"
 
@@ -11,3 +11,4 @@ crate-type = ["lib"]
 float-cmp = { version = "0.9.0", features = ["std"] }
 serde = { version = "1.0.193", features = ["derive"] }
 ron = "0.8.1"
+num-traits = "0.2.17"
