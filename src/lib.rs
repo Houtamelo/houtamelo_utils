@@ -1,8 +1,8 @@
 #![feature(structural_match)]
+#![allow(non_camel_case_types)]
 
 mod iter_generator;
 mod any_matches_macro;
-mod bounded_ints;
 mod clamp01;
 mod bounded_floats;
 mod indexed_set;
@@ -13,11 +13,6 @@ pub mod prelude {
 	pub use super::iter_generator::*;
 	pub use super::any_matches;
 	pub use super::clamp01::*;
-	pub use super::bounded_ints::*;
-	pub use super::bounded_ints::bound_i8::*;
-	pub use super::bounded_ints::bound_i16::*;
-	pub use super::bounded_ints::bound_u8::*;
-	pub use super::bounded_ints::bound_u16::*;
 	pub use super::bound_f32_impl;
 	pub use super::bound_f64_impl;
 	pub use super::indexed_set::*;
