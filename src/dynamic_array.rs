@@ -19,6 +19,23 @@ impl<T> Deref for DynamicArray<T> where T: Sized + 'static {
 	}
 }
 
+impl<T: Clone> DynamicArray<T> {
+	pub fn convert_to_owned(&mut self) -> &mut Vec<T> {
+		match self {
+			DynamicArray::Owned(vec) => return vec,
+			DynamicArray::Static(static_array) => {
+				let vec = static_array.iter()
+					.map(|item| item.clone())
+					.collect();
+				*self = DynamicArray::Owned(vec);
+				let DynamicArray::Owned(vec) = self 
+					else { unreachable!(); };
+				return vec;
+			}
+		}
+	}
+}
+
 impl<T> AsRef<[T]> for DynamicArray<T> where T: Sized + 'static {
 	fn as_ref(&self) -> &[T] {
 		return self.deref();
