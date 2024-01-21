@@ -10,10 +10,18 @@
 ///
 /// Returns `true` if any element matches the pattern, otherwise `false`.
 macro_rules! any_matches {
-    ($collection: ident, $pattern: pat) => {
+    ($collection: expr, $pattern: pat) => {
 		{ 
+			#[allow(unused_imports)]
 			use $crate::prelude::IterGenerator;
-			$collection.iterate().any(|d| matches!(d, $pattern))
+			$collection.iterate().any(|e| matches!(e, $pattern))
+		}
+	};
+	($collection: ident, $pattern: pat) => {
+		{ 
+			#[allow(unused_imports)]
+			use $crate::prelude::IterGenerator;
+			$collection.iterate().any(|e| matches!(e, $pattern))
 		}
 	}
 }

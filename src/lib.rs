@@ -8,10 +8,12 @@ mod bounded_floats;
 mod indexed_set;
 mod indexed_hash_map;
 mod dynamic_array;
+mod no_matches_macro;
 
 pub mod prelude {
 	pub use super::iter_generator::*;
 	pub use super::any_matches;
+	pub use super::no_matches;
 	pub use super::clamp01::*;
 	pub use super::bound_f32_impl;
 	pub use super::bound_f64_impl;
