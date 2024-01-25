@@ -9,6 +9,7 @@ mod indexed_set;
 mod indexed_hash_map;
 mod dynamic_array;
 mod no_matches_macro;
+mod touch;
 
 pub mod prelude {
 	pub use super::iter_generator::*;
@@ -20,6 +21,7 @@ pub mod prelude {
 	pub use super::indexed_set::*;
 	pub use super::indexed_hash_map::*;
 	pub use super::dynamic_array::*;
+	pub use super::touch::*;
 }
 
 #[cfg(test)]
