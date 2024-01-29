@@ -48,6 +48,14 @@ impl<TKey, TValue> IndexedHashMap<TKey, TValue> where TKey: Hash + PartialEq + E
 			return None;
 		}
 	}
+
+	pub fn try_index(&self, index: usize) -> Option<&TValue> {
+		return self.inner.get(index);
+	}
+	
+	pub fn try_index_mut(&mut self, index: usize) -> Option<&mut TValue> {
+		return self.inner.get_mut(index);
+	}
 	
 	pub fn remove(&mut self, key: &TKey) -> Option<TValue> {
 		if let Some(index) = self.indexer.remove(key) {
@@ -77,7 +85,7 @@ impl<TKey, TValue> IndexedHashMap<TKey, TValue> where TKey: Hash + PartialEq + E
 	pub fn keys(&self) -> impl ExactSizeIterator<Item = &TKey> {
 		return self.indexer.keys();
 	}
-	
+
 	pub fn values(&self) -> impl ExactSizeIterator<Item = &TValue> {
 		return self.inner.iter();
 	}

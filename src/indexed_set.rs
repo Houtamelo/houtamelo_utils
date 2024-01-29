@@ -52,6 +52,14 @@ impl<T> IndexedSet<T> where T : Hash + PartialEq + Eq {
 	pub fn iter_mut(&mut self) -> std::slice::IterMut<T> {
 		return self.inner.iter_mut();
 	}
+
+	pub fn try_index(&self, index: usize) -> Option<&T> {
+		return self.inner.get(index);
+	}
+
+	pub fn try_index_mut(&mut self, index: usize) -> Option<&mut T> {
+		return self.inner.get_mut(index);
+	}
 	
 	pub fn clear(&mut self) {
 		self.inner.clear();
