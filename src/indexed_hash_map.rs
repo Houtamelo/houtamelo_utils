@@ -57,6 +57,10 @@ impl<TKey, TValue> IndexedHashMap<TKey, TValue> where TKey: Hash + PartialEq + E
 		return self.inner.get_mut(index);
 	}
 	
+	pub fn key_index(&self, key: &TKey) -> Option<&InnerIndex> {
+		return self.indexer.get_by_left(key);
+	}
+	
 	pub fn remove(&mut self, key: &TKey) -> Option<TValue> {
 		let Some((_, index)) = self.indexer.remove_by_left(key)
 			else {
