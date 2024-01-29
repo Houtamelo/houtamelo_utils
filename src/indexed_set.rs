@@ -5,7 +5,8 @@ use serde::{Deserialize, Serialize};
 use crate::iter_generator::IterGenerator;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct IndexedSet<T> where T : Hash + PartialEq + Eq {
+pub struct IndexedSet<T> 
+	where T : Hash + PartialEq + Eq {
 	inner: Vec<T>,
 }
 
@@ -16,21 +17,26 @@ impl<T> IndexedSet<T> where T : Hash + PartialEq + Eq {
 		};
 	}
 	
-	pub fn insert(&mut self, value: T) {
-		if !self.inner.contains(&value) {
+	pub fn insert(&mut self, value: T) -> Option<T> {
+		return if !self.inner.contains(&value) {
 			self.inner.push(value);
-		}
+			None
+		} else {
+			Some(value)
+		};
 	}
 	
-	pub fn remove(&mut self, value: &T) -> bool {
-		for (index, element) in self.inner.iter().enumerate() {
-			if element == value {
-				self.inner.remove(index);
-				return true;
-			}
-		}
-		
-		return false;
+	pub fn remove(&mut self, value: &T) -> Option<usize> {
+		return if let Some(index) = self.inner.iter().enumerate()
+			.find_map(|(index, element)| 
+				(*element).eq(value)
+					.then_some(index)) 
+		{
+			self.inner.remove(index);
+			Some(index)
+		} else {
+			None
+		};
 	}
 	
 	pub fn contains(&self, value: &T) -> bool {
@@ -84,7 +90,8 @@ impl<T> IndexedSet<T> where T : Hash + PartialEq + Eq {
 	}
 	
 	pub fn contains_range(&self, range: &RangeInclusive<usize>) -> bool {
-		return *range.start() < self.inner.len() && *range.end() < self.inner.len();
+		return *range.start() < self.inner.len() 
+			&& *range.end() < self.inner.len();
 	}
 
 	/// Removes the specified range from the vector in bulk, returning all removed elements as an iterator. If the iterator is dropped before being fully consumed, it drops the remaining removed elements.
@@ -261,6 +268,13 @@ impl<T> IndexedSet<T> where T : Hash + PartialEq + Eq {
 	pub fn extend_from_slice(&mut self, other: &[T]) where T: Clone {
 		self.inner.extend_from_slice(other);
 	}
+
+	pub fn consume_from(&mut self, other: impl IntoIterator<Item = T>) -> Vec<T> {
+		return other.into_iter()
+		            .filter_map(|value|
+			            self.insert(value))
+		            .collect();
+	}
 }
 
 impl<T> Default for IndexedSet<T> where T : Hash + PartialEq + Eq {
@@ -382,3 +396,65 @@ impl<'a, T> IterGenerator<'a, &'a T> for &'a mut IndexedSet<T> where T : Hash + 
 	}
 }
 
+
+// Inserting a new element into an empty IndexedSet returns None and increases the length of the set by 1
+#[test]
+fn test_insert_new_element_into_empty_set() {
+	let mut set = IndexedSet::new();
+	assert_eq!(set.insert(1), None);
+	assert_eq!(set.len(), 1);
+}
+
+// Inserting an existing element into an IndexedSet returns Some(value) and does not increase the length of the set
+#[test]
+fn test_insert_existing_element_into_set() {
+	let mut set = IndexedSet::new();
+	set.insert(1);
+	assert_eq!(set.insert(1), Some(1));
+	assert_eq!(set.len(), 1);
+}
+
+// Removing an existing element from an IndexedSet returns Some(index) and decreases the length of the set by 1
+#[test]
+fn test_remove_existing_element_from_set() {
+	let mut set = IndexedSet::new();
+	set.insert(1);
+	assert_eq!(set.remove(&1), Some(0));
+	assert_eq!(set.len(), 0);
+}
+
+// Removing a non-existing element from an IndexedSet returns None and does not change the length of the set
+#[test]
+fn test_remove_non_existing_element_from_set() {
+	let mut set = IndexedSet::new();
+	assert_eq!(set.remove(&1), None);
+	assert_eq!(set.len(), 0);
+}
+
+// Iterating over an IndexedSet using iter() returns a std::slice::Iter<T> with the same elements as the set
+#[test]
+fn test_iterate_over_set_using_iter() {
+	let mut set = IndexedSet::new();
+	set.insert(1);
+	set.insert(2);
+	set.insert(3);
+	let mut iter = set.iter();
+	assert_eq!(iter.next(), Some(&1));
+	assert_eq!(iter.next(), Some(&2));
+	assert_eq!(iter.next(), Some(&3));
+	assert_eq!(iter.next(), None);
+}
+
+// Iterating over an IndexedSet using iter_mut() returns a std::slice::IterMut<T> with the same elements as the set
+#[test]
+fn test_iterate_over_set_using_iter_mut() {
+	let mut set = IndexedSet::new();
+	set.insert(1);
+	set.insert(2);
+	set.insert(3);
+	let mut iter = set.iter_mut();
+	assert_eq!(iter.next(), Some(&mut 1));
+	assert_eq!(iter.next(), Some(&mut 2));
+	assert_eq!(iter.next(), Some(&mut 3));
+	assert_eq!(iter.next(), None);
+}
