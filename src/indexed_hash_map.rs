@@ -229,7 +229,13 @@ impl<TKey, TValue> IndexMut<&TKey> for &mut IndexedHashMap<TKey, TValue> where T
 
 impl<TKey, TValue> FromIterator<(TKey, TValue)> for IndexedHashMap<TKey, TValue> where TKey: Hash + PartialEq + Eq {
 	fn from_iter<T: IntoIterator<Item = (TKey, TValue)>>(iter: T) -> Self {
-		return iter.into_iter().collect();
+		let result = {
+			let mut temp = IndexedHashMap::new();
+			temp.extend(iter.into_iter());
+			temp
+		};
+		
+		return result;
 	}
 }
 
@@ -379,5 +385,11 @@ fn test_iterate_over_map() {
 	
 	assert_eq!(expect.len(), 0);
 	assert_eq!(iter.next(), None);
+}
+
+#[test]
+fn test_from_iter() {
+	let iter: Vec<(i32, &str)> = vec![(1, "one"), (2, "two"), (3, "three")];
+	let _: IndexedHashMap<i32, &str> = iter.into_iter().collect();
 }
 

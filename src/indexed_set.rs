@@ -360,13 +360,13 @@ impl<'a, T> IntoIterator for &'a mut IndexedSet<T> where T : Hash + PartialEq + 
 
 impl<T> FromIterator<T> for IndexedSet<T> where T : Hash + PartialEq + Eq {
 	fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
-		let mut set = IndexedSet::new();
+		let result = {
+			let mut temp = IndexedSet::new();
+			temp.extend(iter.into_iter());
+			temp
+		};
 		
-		for value in iter {
-			set.insert(value);
-		}
-		
-		return set;
+		return result;
 	}
 }
 
@@ -457,4 +457,10 @@ fn test_iterate_over_set_using_iter_mut() {
 	assert_eq!(iter.next(), Some(&mut 2));
 	assert_eq!(iter.next(), Some(&mut 3));
 	assert_eq!(iter.next(), None);
+}
+
+#[test]
+fn test_from_iter() {
+	let iter: Vec<&str> = vec!["one", "two", "three"];
+	let _: IndexedSet<&str> = iter.into_iter().collect();
 }
