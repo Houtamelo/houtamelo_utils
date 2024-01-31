@@ -2,6 +2,7 @@
 #![allow(non_camel_case_types)]
 
 mod iter_generator;
+mod remove_many;
 mod any_matches_macro;
 mod clamp01;
 mod bounded_floats;
@@ -14,6 +15,7 @@ mod none_or;
 
 pub mod prelude {
 	pub use super::iter_generator::*;
+	pub use super::remove_many::*;
 	pub use super::any_matches;
 	pub use super::no_matches;
 	pub use super::clamp01::*;
