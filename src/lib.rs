@@ -1,5 +1,6 @@
 #![feature(structural_match)]
 #![feature(hash_extract_if)]
+#![feature(const_type_name)]
 #![allow(non_camel_case_types)]
 
 mod iter_generator;
@@ -15,6 +16,9 @@ mod no_matches_macro;
 mod touch;
 mod none_or;
 mod closure_converters;
+mod weighted_rand;
+mod fn_name;
+pub use fn_name::*;
 
 pub mod prelude {
 	pub use super::iter_generator::*;
@@ -31,6 +35,7 @@ pub mod prelude {
 	pub use super::touch::*;
 	pub use super::none_or::*;
 	pub use super::closure_converters::*;
+	pub use super::weighted_rand::*;
 }
 
 #[cfg(test)]
