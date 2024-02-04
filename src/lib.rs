@@ -14,6 +14,7 @@ mod dynamic_array;
 mod no_matches_macro;
 mod touch;
 mod none_or;
+mod closure_converters;
 
 pub mod prelude {
 	pub use super::iter_generator::*;
@@ -29,6 +30,7 @@ pub mod prelude {
 	pub use super::dynamic_array::*;
 	pub use super::touch::*;
 	pub use super::none_or::*;
+	pub use super::closure_converters::*;
 }
 
 #[cfg(test)]
