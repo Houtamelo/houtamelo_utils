@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! own_str {
+macro_rules! own {
     ($lit: literal) => {
 	    $lit.to_string()
     };
@@ -7,9 +7,9 @@ macro_rules! own_str {
 
 #[test]
 fn test() {
-	let str = own_str!("hello");
+	let str = own!("hello");
 	assert_eq!(str, "hello".to_string());
 	
-	let str = own_str!("hello world");
+	let str = own!("hello world");
 	assert_eq!(str, "hello world".to_string());
 }

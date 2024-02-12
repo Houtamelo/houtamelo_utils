@@ -38,7 +38,7 @@ pub mod prelude {
 	pub use super::none_or::*;
 	pub use super::closure_converters::*;
 	pub use super::weighted_rand::*;
-	pub use super::own_str;
+	pub use super::own;
 }
 
 #[cfg(test)]
