@@ -1,6 +1,6 @@
 [package]
 name = "houtamelo_utils"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Houtamelo"]
 edition = "2021"
 description = "A collection of utilities shared between Houtamelo's projects."
