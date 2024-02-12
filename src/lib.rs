@@ -17,7 +17,9 @@ mod touch;
 mod none_or;
 mod closure_converters;
 mod weighted_rand;
+mod str_macro;
 mod fn_name;
+
 pub use fn_name::*;
 
 pub mod prelude {
@@ -36,6 +38,7 @@ pub mod prelude {
 	pub use super::none_or::*;
 	pub use super::closure_converters::*;
 	pub use super::weighted_rand::*;
+	pub use super::own_str;
 }
 
 #[cfg(test)]
