@@ -18,6 +18,7 @@ mod none_or;
 mod closure_converters;
 mod weighted_rand;
 mod str_macro;
+mod count_or_more;
 mod fn_name;
 
 pub use fn_name::*;
@@ -39,6 +40,7 @@ pub mod prelude {
 	pub use super::closure_converters::*;
 	pub use super::weighted_rand::*;
 	pub use super::own;
+	pub use super::count_or_more::*;
 }
 
 #[cfg(test)]
