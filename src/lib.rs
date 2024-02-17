@@ -15,11 +15,13 @@ mod dynamic_array;
 mod no_matches_macro;
 mod touch;
 mod none_or;
+mod none;
 mod closure_converters;
 mod weighted_rand;
 mod str_macro;
 mod count_or_more;
 mod fn_name;
+mod all_matches;
 
 pub use fn_name::*;
 
@@ -41,6 +43,8 @@ pub mod prelude {
 	pub use super::weighted_rand::*;
 	pub use super::own;
 	pub use super::count_or_more::*;
+	pub use super::none::None;
+	pub use super::all_matches;
 }
 
 #[cfg(test)]
