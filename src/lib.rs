@@ -42,6 +42,7 @@ pub mod prelude {
 	pub use super::closure_converters::*;
 	pub use super::weighted_rand::*;
 	pub use super::own;
+	pub use super::own_vec;
 	pub use super::count_or_more::*;
 	pub use super::none::None;
 	pub use super::all_matches;
