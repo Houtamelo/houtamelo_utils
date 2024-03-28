@@ -1,7 +1,11 @@
 #![feature(structural_match)]
 #![feature(hash_extract_if)]
 #![feature(const_type_name)]
+#![feature(iter_from_coroutine)]
+#![feature(coroutines)]
 #![allow(non_camel_case_types)]
+
+pub use fn_name::*;
 
 mod iter_generator;
 mod remove_many;
@@ -22,30 +26,30 @@ mod str_macro;
 mod count_or_more;
 mod fn_name;
 mod all_matches;
-
-pub use fn_name::*;
+mod hash_set_extract_keys;
 
 pub mod prelude {
-	pub use super::iter_generator::*;
-	pub use super::remove_many::*;
-	pub use super::take_first::*;
+	pub use super::all_matches;
 	pub use super::any_matches;
-	pub use super::no_matches;
-	pub use super::clamp01::*;
 	pub use super::bound_f32_impl;
 	pub use super::bound_f64_impl;
-	pub use super::indexed_set::*;
-	pub use super::indexed_hash_map::*;
-	pub use super::dynamic_array::*;
-	pub use super::touch::*;
-	pub use super::none_or::*;
+	pub use super::clamp01::*;
 	pub use super::closure_converters::*;
-	pub use super::weighted_rand::*;
+	pub use super::count_or_more::*;
+	pub use super::dynamic_array::*;
+	pub use super::hash_set_extract_keys::*;
+	pub use super::indexed_hash_map::*;
+	pub use super::indexed_set::*;
+	pub use super::iter_generator::*;
+	pub use super::no_matches;
+	pub use super::none::None;
+	pub use super::none_or::*;
 	pub use super::own;
 	pub use super::own_vec;
-	pub use super::count_or_more::*;
-	pub use super::none::None;
-	pub use super::all_matches;
+	pub use super::remove_many::*;
+	pub use super::take_first::*;
+	pub use super::touch::*;
+	pub use super::weighted_rand::*;
 }
 
 #[cfg(test)]
