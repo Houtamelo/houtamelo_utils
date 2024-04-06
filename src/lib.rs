@@ -27,6 +27,9 @@ mod count_or_more;
 mod fn_name;
 mod all_matches;
 mod hash_set_extract_keys;
+mod clone_random;
+mod take_random;
+mod get_random;
 
 pub mod prelude {
 	pub use super::all_matches;
@@ -34,9 +37,11 @@ pub mod prelude {
 	pub use super::bound_f32_impl;
 	pub use super::bound_f64_impl;
 	pub use super::clamp01::*;
+	pub use super::clone_random::*;
 	pub use super::closure_converters::*;
 	pub use super::count_or_more::*;
 	pub use super::dynamic_array::*;
+	pub use super::get_random::*;
 	pub use super::hash_set_extract_keys::*;
 	pub use super::indexed_hash_map::*;
 	pub use super::indexed_set::*;
@@ -48,6 +53,7 @@ pub mod prelude {
 	pub use super::own_vec;
 	pub use super::remove_many::*;
 	pub use super::take_first::*;
+	pub use super::take_random::*;
 	pub use super::touch::*;
 	pub use super::weighted_rand::*;
 }
