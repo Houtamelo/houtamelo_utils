@@ -5,8 +5,6 @@
 #![feature(coroutines)]
 #![allow(non_camel_case_types)]
 
-pub use fn_name::*;
-
 mod iter_generator;
 mod remove_many;
 mod take_first;
@@ -32,6 +30,20 @@ mod take_random;
 mod get_random;
 
 pub mod prelude {
+	pub use std::any::{type_name, type_name_of_val};
+	pub use std::collections::{HashMap, HashSet, VecDeque};
+	pub use std::hash::Hash;
+	pub use std::marker::PhantomData;
+	pub use std::mem;
+	pub use std::ops::{Deref, DerefMut};
+	pub use std::rc::{Rc, Weak};
+
+	pub use anyhow::{anyhow, bail, Result};
+	pub use inline_format::format as iformat;
+	pub use inline_format::format_args as iformat_args;
+	pub use inline_format::write as iwrite;
+	pub use pluck::pluck;
+
 	pub use super::all_matches;
 	pub use super::any_matches;
 	pub use super::bound_f32_impl;
@@ -41,6 +53,7 @@ pub mod prelude {
 	pub use super::closure_converters::*;
 	pub use super::count_or_more::*;
 	pub use super::dynamic_array::*;
+	pub use super::fn_name::*;
 	pub use super::get_random::*;
 	pub use super::hash_set_extract_keys::*;
 	pub use super::indexed_hash_map::*;
