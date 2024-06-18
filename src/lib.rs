@@ -3,6 +3,7 @@
 #![feature(const_type_name)]
 #![feature(iter_from_coroutine)]
 #![feature(coroutines)]
+#![feature(vec_push_within_capacity)]
 #![allow(non_camel_case_types)]
 
 mod iter_generator;

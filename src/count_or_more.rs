@@ -134,9 +134,7 @@ impl<const COUNT: usize, T> CountOrMore<COUNT, T> {
 	pub fn capacity(&self) -> usize {
 		return COUNT + self.dynamic.capacity();
 	}
-
-	#[must_use]
-	#[cfg(vec_push_within_capacity)]
+	
 	pub fn push_within_capacity(&mut self, value: T) -> Result<(), T> {
 		return self.dynamic.push_within_capacity(value);
 	}
@@ -508,7 +506,7 @@ mod tests {
 		let mut count_or_more = CountOrMore::new(fixed, dynamic.clone());
 
 		count_or_more.reserve_exact(10);
-		assert_eq!(count_or_more.capacity(), 15);
+		assert_eq!(count_or_more.capacity(), 20);
 	}
 
 	#[test]

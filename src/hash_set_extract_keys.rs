@@ -19,7 +19,7 @@ impl<TVal, TKey: PartialEq + Eq + Hash> ExtractKeys for &mut HashMap<TKey, TVal>
 	                    keys: impl Iterator<Item = &'a Self::Key>)
 	                    -> impl Iterator<Item = Self::Value>
 	                    where <Self as ExtractKeys>::Key: 'a {
-		std::iter::from_coroutine(move || {
+		std::iter::from_coroutine(#[coroutine] move || {
 			for key in keys {
 				if let Some(_value) = self.remove(key) {
 					yield _value;
