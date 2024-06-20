@@ -62,6 +62,7 @@ pub mod prelude {
 	pub use super::iter_generator::*;
 	pub use super::no_matches;
 	pub use super::none::None;
+	#[allow(unused)]
 	pub use super::none_or::*;
 	pub use super::own;
 	pub use super::own_vec;

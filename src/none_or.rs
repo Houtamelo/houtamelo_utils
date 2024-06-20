@@ -1,3 +1,4 @@
+/*
 pub trait IsNoneOr<T> {
 	fn is_none_or(self, predicate: impl FnOnce(T) -> bool) -> bool;
 }
@@ -28,3 +29,4 @@ impl<'a, T> IsNoneOr<&'a T> for &'a mut Option<T> {
 		};
 	}
 }
+*/
