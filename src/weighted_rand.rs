@@ -1,13 +1,15 @@
-use crate::prelude::IterGenerator;
 use rand::Rng;
 
+use crate::prelude::*;
+
 pub trait WeightedRandom<'a, T>
-	where Self: IterGenerator<'a, (T, &'a f32)>
+where Self: IterGenerator<'a, (T, &'a f32)>
 {
-	fn get_weighted_random(&'a self, rng: &mut impl Rng) -> Option<T> {
-		let weight_sum = self
-			.iterate()
-			.fold(0., |acc, (_, weight)| acc + weight);
+	fn get_weighted_random(&'a self, rng:&mut impl Rng) -> Option<T> {
+		let weight_sum = self.iterate().fold(
+			0.,
+			|acc, (_, weight)| acc + weight,
+		);
 
 		let random = rng.gen_range(0.0..=weight_sum);
 
@@ -19,9 +21,9 @@ pub trait WeightedRandom<'a, T>
 			}
 		}
 
-		return None;
+		None
 	}
 }
 
-impl<'a, T, TImpl> WeightedRandom<'a, T> for TImpl
-	where TImpl: IterGenerator<'a, (T, &'a f32)> { }
+impl<'a, T, TImpl> WeightedRandom<'a, T> for TImpl where TImpl: IterGenerator<'a, (T, &'a f32)>
+{}

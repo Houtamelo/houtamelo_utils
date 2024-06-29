@@ -15,9 +15,9 @@ pub const fn fn_name<T: ?Sized>(_val: &T) -> &'static str {
 		index -= 1;
 	}
 
-	return name;
+	name
 }
 
 pub const fn full_fn_name<T: ?Sized>(_val: &T) -> &'static str {
-	return std::any::type_name::<T>();
+	std::any::type_name::<T>()
 }

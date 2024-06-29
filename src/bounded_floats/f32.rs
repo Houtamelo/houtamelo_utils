@@ -220,7 +220,7 @@ macro_rules! bound_f32_impl {
 	};
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "serde"))]
 mod tests {
 	use serde::{Deserialize, Serialize};
 

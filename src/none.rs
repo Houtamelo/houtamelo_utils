@@ -4,6 +4,6 @@ pub trait None<T> {
 
 impl<T, TIter: Iterator<Item = T>> None<T> for TIter {
 	fn none(&mut self, mut condition: impl FnMut(T) -> bool) -> bool {
-		return self.all(|item| !condition(item));
+		self.all(|item| !condition(item))
 	}
 }
