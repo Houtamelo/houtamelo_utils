@@ -51,11 +51,6 @@ pub mod prelude {
 	};
 
 	pub use anyhow::{anyhow, bail, Result};
-	pub use inline_format::{
-		format as iformat,
-		format_args as iformat_args,
-		write as iwrite,
-	};
 	pub use pluck::pluck;
 
 	pub use super::{
