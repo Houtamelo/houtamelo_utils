@@ -5,6 +5,7 @@
 #![feature(impl_trait_in_assoc_type)]
 #![feature(coroutines)]
 #![feature(iter_from_coroutine)]
+#![feature(macro_metavar_expr)]
 #![allow(non_camel_case_types)]
 #![allow(clippy::doc_lazy_continuation)]
 
@@ -27,12 +28,6 @@ mod fn_name;
 mod all_matches;
 mod hash_set_extract_keys;
 mod delegate_impls_macro;
-
-#[cfg(feature = "type_table")]
-mod variant_table_macro;
-
-#[cfg(feature = "type_table")]
-mod type_table_macro;
 
 #[cfg(feature = "rand")]
 mod weighted_rand;
@@ -84,9 +79,6 @@ pub mod prelude {
 	};
 	
 	pub use crate::delegate_impls;
-	
-	#[cfg(feature = "type_table")]
-	pub use crate::{type_table, variant_table};
 	
 	#[cfg(feature = "rand")]
 	pub use super::clone_random::*;
