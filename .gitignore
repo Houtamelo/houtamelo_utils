@@ -12,3 +12,4 @@ Cargo.lock
 
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
+/rustc-ice-2024-07-07T00_42_16-38648.txt
