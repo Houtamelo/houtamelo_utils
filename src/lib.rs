@@ -9,14 +9,13 @@
 #![allow(non_camel_case_types)]
 #![allow(clippy::doc_lazy_continuation)]
 
-mod iter_generator;
 mod remove_many;
 mod take_first;
 mod any_matches_macro;
 mod clamp01;
 mod bounded_floats;
 mod indexed_set;
-mod indexed_hash_map;
+mod indexed_map;
 mod dynamic_array;
 mod no_matches_macro;
 mod touch;
@@ -30,16 +29,7 @@ mod hash_set_extract_keys;
 mod delegate_impls_macro;
 
 #[cfg(feature = "rand")]
-mod weighted_rand;
-
-#[cfg(feature = "rand")]
-mod clone_random;
-
-#[cfg(feature = "rand")]
-mod take_random;
-
-#[cfg(feature = "rand")]
-mod get_random;
+mod random_utils;
 
 pub mod prelude {
 	pub use std::{
@@ -66,9 +56,8 @@ pub mod prelude {
 		dynamic_array::*,
 		fn_name::*,
 		hash_set_extract_keys::*,
-		indexed_hash_map::*,
+		indexed_map::*,
 		indexed_set::*,
-		iter_generator::*,
 		no_matches,
 		none::None,
 		own,
@@ -81,11 +70,9 @@ pub mod prelude {
 	pub use crate::delegate_impls;
 	
 	#[cfg(feature = "rand")]
-	pub use super::clone_random::*;
+	pub use super::random_utils::get_random::*;
 	#[cfg(feature = "rand")]
-	pub use super::get_random::*;
+	pub use super::random_utils::take_random::*;
 	#[cfg(feature = "rand")]
-	pub use super::take_random::*;
-	#[cfg(feature = "rand")]
-	pub use super::weighted_rand::*;
+	pub use super::random_utils::weighted_random::*;
 }
