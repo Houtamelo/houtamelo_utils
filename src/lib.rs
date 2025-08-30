@@ -1,5 +1,4 @@
 #![feature(structural_match)]
-#![feature(hash_extract_if)]
 #![feature(const_type_name)]
 #![feature(vec_push_within_capacity)]
 #![feature(impl_trait_in_assoc_type)]
@@ -14,15 +13,12 @@ mod take_first;
 mod any_matches_macro;
 mod clamp01;
 mod bounded_floats;
-mod indexed_set;
-mod indexed_map;
-mod dynamic_array;
+
 mod no_matches_macro;
 mod touch;
 mod none;
 mod closure_converters;
 mod str_macro;
-mod count_or_more;
 mod fn_name;
 mod all_matches;
 mod hash_set_extract_keys;
@@ -30,6 +26,7 @@ mod delegate_impls_macro;
 
 #[cfg(feature = "rand")]
 mod random_utils;
+mod collections;
 
 pub mod prelude {
 	pub use std::{
@@ -52,12 +49,9 @@ pub mod prelude {
 		bound_f64_impl,
 		clamp01::*,
 		closure_converters::*,
-		count_or_more::*,
-		dynamic_array::*,
+        collections::*,
 		fn_name::*,
 		hash_set_extract_keys::*,
-		indexed_map::*,
-		indexed_set::*,
 		no_matches,
 		none::None,
 		own,

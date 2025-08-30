@@ -14,7 +14,7 @@ where T: Sized + 'static
 	type Target = [T];
 
 	fn deref(&self) -> &Self::Target {
-		return match self {
+		match self {
 			DynamicArray::Static(array) => array,
 			DynamicArray::Owned(vec) => vec.as_slice(),
 		}
@@ -41,7 +41,7 @@ impl<T:Clone> DynamicArray<T> {
 impl<T> AsRef<[T]> for DynamicArray<T>
 where T: Sized + 'static
 {
-	fn as_ref(&self) -> &[T] { return self.deref(); }
+	fn as_ref(&self) -> &[T] { self.deref() }
 }
 
 #[cfg(feature = "serde")]
@@ -50,7 +50,7 @@ where T: Sized + 'static + serde::Serialize
 {
 	fn serialize<S>(&self, serializer:S) -> Result<S::Ok, S::Error>
 	where S: serde::Serializer {
-		return self.deref().serialize(serializer);
+		self.deref().serialize(serializer)
 	}
 }
 
